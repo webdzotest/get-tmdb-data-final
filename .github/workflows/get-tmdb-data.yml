@@ -24,7 +24,6 @@ jobs:
 
       - name: Run JS
         shell: bash
-        working-directory: jobs/get-tmdb-data
         run: |
           cd ./js && npm install && cd ..
           node js/index.js ${{ secrets.TMDB_API_KEY_CLONE }} && rm ./js/package-lock.json
