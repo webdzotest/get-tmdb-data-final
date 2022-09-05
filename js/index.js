@@ -44,7 +44,7 @@ const getActorsDataFromTmdb = async () => {
       console.log(err);
       const csv = new ObjectsToCsv(actorsData);
       actorsData = [];
-      await csv.toDisk(`../../tmdbdata/actors-data(${csvTime}).csv`, { append: true });
+      await csv.toDisk(`./tmdbdata/actors-data(${csvTime}).csv`, { append: true });
       setTimeout(()=> { console.log("Waiting for sometime because of some error");}, 10000);
       continue;
     }
@@ -52,7 +52,7 @@ const getActorsDataFromTmdb = async () => {
   let endTime = new Date().toTimeString().slice(0, 8);
   console.log("EndTime::", endTime);
   const csv = new ObjectsToCsv(actorsData);
-  await csv.toDisk(`../../tmdbdata/actors-data(${csvTime}).csv`, { append: true });
+  await csv.toDisk(`./tmdbdata/actors-data(${csvTime}).csv`, { append: true });
   return true;
 };
 
@@ -259,25 +259,25 @@ const getMoviesFromTmdb = async () => {
 }
 
 const appendToCsv = async (moviesData, movieTranslationsData, actorRolesData, movieActorsData, actorCrewsData, imagesData, videosData, keywordsData, filename) => {
-  if (!fs.existsSync(`../../tmdbdata/${filename}`)){
-    fs.mkdirSync(`../../tmdbdata/${filename}`);
+  if (!fs.existsSync(`./tmdbdata/${filename}`)){
+    fs.mkdirSync(`./tmdbdata/${filename}`);
   }
   const moviesCsvData = new ObjectsToCsv(moviesData);
-  await moviesCsvData.toDisk(`../../tmdbdata/${filename}/movies-data.csv`, { append: true });
+  await moviesCsvData.toDisk(`./tmdbdata/${filename}/movies-data.csv`, { append: true });
   const translationsCsvData = new ObjectsToCsv(movieTranslationsData);
-  await translationsCsvData.toDisk(`../../tmdbdata/${filename}/translations-data.csv`, { append: true });
+  await translationsCsvData.toDisk(`./tmdbdata/${filename}/translations-data.csv`, { append: true });
   const actorRoleCsvData = new ObjectsToCsv(actorRolesData);
-  await actorRoleCsvData.toDisk(`../../tmdbdata/${filename}/actor-roles-data.csv`, { append: true });
+  await actorRoleCsvData.toDisk(`./tmdbdata/${filename}/actor-roles-data.csv`, { append: true });
   const movieActorsCsvData = new ObjectsToCsv(movieActorsData);
-  await movieActorsCsvData.toDisk(`../../tmdbdata/${filename}/movie-actors-data.csv`, { append: true });
+  await movieActorsCsvData.toDisk(`./tmdbdata/${filename}/movie-actors-data.csv`, { append: true });
   const actorCrewsCsvData = new ObjectsToCsv(actorCrewsData);
-  await actorCrewsCsvData.toDisk(`../../tmdbdata/${filename}/actor-crews-data.csv`, { append: true });
+  await actorCrewsCsvData.toDisk(`./tmdbdata/${filename}/actor-crews-data.csv`, { append: true });
   const imagesCsvData = new ObjectsToCsv(imagesData);
-  await imagesCsvData.toDisk(`../../tmdbdata/${filename}/images-data.csv`, { append: true });
+  await imagesCsvData.toDisk(`./tmdbdata/${filename}/images-data.csv`, { append: true });
   const videosCsvData = new ObjectsToCsv(videosData);
-  await videosCsvData.toDisk(`../../tmdbdata/${filename}/videos-data.csv`, { append: true });
+  await videosCsvData.toDisk(`./tmdbdata/${filename}/videos-data.csv`, { append: true });
   const keywordsCsvData = new ObjectsToCsv(keywordsData);
-  await keywordsCsvData.toDisk(`../../tmdbdata/${filename}/keywords-data.csv`, { append: true });
+  await keywordsCsvData.toDisk(`./tmdbdata/${filename}/keywords-data.csv`, { append: true });
   return true;
 }
 
