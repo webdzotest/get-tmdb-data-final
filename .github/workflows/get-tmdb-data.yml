@@ -1,0 +1,43 @@
+name: get tmdb data
+on:  
+  workflow_dispatch:
+
+jobs:
+  get-tmdb-persons-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        
+      - name: Increase Buffer Size
+        run: git config --global http.postBuffer 2147483648
+
+      - name: Enable LFS
+        run: |
+          git lfs install && git lfs track "*.csv" && git add .gitattributes
+      - name: Set Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Run JS
+        shell: bash
+        working-directory: jobs/get-tmdb-data
+        run: |
+          cd ./js && npm install && cd ..
+          node js/index.js ${{ secrets.TMDB_API_KEY_CLONE }} && rm ./js/package-lock.json
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H_%M_%S')"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          base: main
+          title: TMDB movie data
+          body: TMDB movie data
+          branch: tmdb-movie-data-${{ steps.date.outputs.date }}
+          add-paths: |
+            tmdbdata/*.csv
